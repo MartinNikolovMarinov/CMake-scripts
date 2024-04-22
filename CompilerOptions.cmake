@@ -23,6 +23,10 @@ macro(generate_common_flags
 
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
+        # The following is a hack to force MSVC to use multiple cores for compilation.
+        # Perhaps cmake has some bug, but --perallel does nothing.
+        add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/MP>)
+
         set(local_common_flags ${local_common_flags}
             /MP
             -Wall -W4
