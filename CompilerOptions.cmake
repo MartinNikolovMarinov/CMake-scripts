@@ -17,7 +17,6 @@ macro(generate_common_flags
             -Wmisleading-indentation -Woverloaded-virtual -Wnon-virtual-dtor
             -Wdisabled-optimization # warn if the compailer disables requestd level of optimization
             -Wno-unknown-pragmas -Wno-unused-function -Wno-variadic-macros
-            -Wno-gnu-zero-variadic-macro-arguments # Supress warning for " , ##__VA_ARGS__ " in variadic macros
         )
         set(local_debug_flags ${local_debug_flags} -g -O0 -Wnull-dereference)
         set(local_release_flags ${local_release_flags} -O3)
