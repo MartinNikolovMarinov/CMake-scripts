@@ -19,7 +19,7 @@ macro(generate_common_flags
             -Wno-unknown-pragmas -Wno-unused-function -Wno-variadic-macros
         )
         set(local_debug_flags ${local_debug_flags} -g -O0 -Wnull-dereference)
-        set(local_release_flags ${local_release_flags} -O3)
+        set(local_release_flags ${local_release_flags} -O2)
 
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 
