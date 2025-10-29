@@ -13,7 +13,7 @@ macro(generate_common_flags
 
         set(local_common_flags ${local_common_flags}
             -Wall -Wextra -Wfatal-errors -Wconversion -Wpedantic
-            -Wshadow -Wold-style-cast -Wdouble-promotion -Wswitch-enum -Wundef -Wcast-align
+            -Wshadow -Wold-style-cast -Wdouble-promotion -Wswitch-enum -Wundef -Wcast-align -Wextra-semi
             -Wmisleading-indentation -Woverloaded-virtual -Wnon-virtual-dtor
             -Wdisabled-optimization # warn if the compailer disables requestd level of optimization
             -Wno-unknown-pragmas -Wno-unused-function -Wno-variadic-macros
