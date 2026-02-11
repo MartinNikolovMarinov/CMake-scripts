@@ -51,3 +51,57 @@ macro(generate_common_flags
     set(${release_flags_varname} ${local_release_flags})
 
 endmacro()
+
+macro(generate_common_c_flags
+      common_flags_varname common_flags
+      debug_flags_varname debug_flags
+      release_flags_varname release_flags)
+
+    set(local_common_flags "${common_flags}")
+    set(local_debug_flags "${debug_flags}")
+    set(local_release_flags "${release_flags}")
+
+    if(CMAKE_C_COMPILER_ID STREQUAL "GNU" OR
+       CMAKE_C_COMPILER_ID STREQUAL "Clang" OR
+       CMAKE_C_COMPILER_ID STREQUAL "AppleClang")
+
+        set(local_common_flags ${local_common_flags}
+            -Wall -Wextra -Wfatal-errors -Wconversion -Wpedantic
+            -Wshadow -Wdouble-promotion -Wswitch-enum -Wundef -Wcast-align
+            -Wmisleading-indentation
+            -Wdisabled-optimization # warn if the compiler disables requested optimization level
+            -Wno-unknown-pragmas -Wno-unused-function -Wno-variadic-macros
+        )
+        set(local_debug_flags ${local_debug_flags} -g -O0 -Wnull-dereference)
+        set(local_release_flags ${local_release_flags} -O2)
+
+    elseif(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+
+        # The following is a hack to force MSVC to use multiple cores for compilation.
+        # Perhaps cmake has some bug, but --parallel does nothing.
+        add_compile_options($<$<C_COMPILER_ID:MSVC>:/MP>)
+
+        set(local_common_flags ${local_common_flags}
+            /MP
+            /W4
+            /nologo /FC
+            /fastfail
+            /w14254
+            /w14263
+            /w14265
+            /w14287
+            /w14296
+            /w14311
+        )
+        set(local_debug_flags ${local_debug_flags} /Zi /Od)
+        set(local_release_flags ${local_release_flags} /O2)
+    else()
+        message(FATAL_ERROR "Unsupported C compiler")
+        return()
+    endif()
+
+    set(${common_flags_varname} ${local_common_flags})
+    set(${debug_flags_varname} ${local_debug_flags})
+    set(${release_flags_varname} ${local_release_flags})
+
+endmacro()
